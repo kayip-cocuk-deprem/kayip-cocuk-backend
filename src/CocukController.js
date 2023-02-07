@@ -17,14 +17,11 @@ exports.add = function(req, res) {
 }
 
 exports.get = function(req, res) {
-    CocukModel.find({
-        id: req.params.id,
-    }, (err, found) => {
+    console.log(req.params);
+    CocukModel.findById(req.params.id, (err, found) => {
         if (!err) {
             res.send(found);
         }
-        console.log(err);
-        res.send("Some error occured!")
     }).catch(err => console.log("Error occured, " + err));
 }
 
