@@ -1,8 +1,12 @@
 const express = require('express');
 const session = require('express-session')
 const bodyParser = require('body-parser');
-const dbo = require('./db/conn.js');
+const mongoose = require("mongoose");
 
+const router = require('./router')
+
+const dotenv = require('dotenv')
+dotenv.config()
 const app = express();
 
 app.use(express.json())
@@ -11,12 +15,15 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(bodyParser.json());
 
-console.log("Will try to connect database...");
+app.use('/', router)
 
-dbo.connectToServer(function(err){
-    if (err == null) {
-        app.listen(process.env.PORT)
+mongoose.connect(
+    process.env.CONNECTIONSTRING,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
     }
-})
+);
 
-module.exports = app;
+app.listen(process.env.PORT);
+console.log("app is running on port " + process.env.PORT)

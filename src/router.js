@@ -2,8 +2,10 @@ const express = require('express')
 const router = express.Router()
 const controller = require('./CocukController')
 
-router.get('/', controller.add)
+router.get('/:id', controller.get)
 
-router.post('/', controller.register)
+router.get('/', controller.getAll)
+
+router.post('/', controller.add)
 
 module.exports = router
